@@ -1,0 +1,24 @@
+const express = require('express')
+const router = express.Router();
+const orderController = require('../controllers/orderController');
+const Joi = require('joi');
+const validator = require('express-joi-validation').createValidator({});
+const authCheck = require('../middleware/check_auth');
+
+
+
+
+const methodNotAllowed = (req, res) => res.status(405).json({ 'message': 'method not allowed' });
+
+
+router.route('/api/order_create').post(authCheck.checkUser, orderController.addOrder).all(methodNotAllowed);
+
+
+
+
+
+module.exports = router;
+
+
+
+
