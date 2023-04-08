@@ -5,14 +5,14 @@ const path = require('path');
 
 
 const file_check = (req, res, next) => {
-  if (!req.files || !req.files.image) {
+  if (!req.files || !req.files.product_image) {
     return res.status(400).json({
       status: 'error',
       message: 'Missing Files'
     });
   }
   const extensions = ['.png', '.jpg', '.jpeg'];
-  const file = req.files.image;
+  const file = req.files.product_image;
   const fileName = path.extname(file.name);
   if (!extensions.includes(fileName)) {
     return res.status(400).json({
@@ -29,6 +29,7 @@ const file_check = (req, res, next) => {
       });
     }
   })
+  req.imagePath = `/uploads/images/${file.name}`;
 
   next();
 
