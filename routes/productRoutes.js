@@ -14,7 +14,7 @@ const methodNotAllowed = (req, res) => res.status(405).json({ 'message': 'method
 
 router.route('/').get(productController.getProducts).all(methodNotAllowed);
 router.route('/api/product/:id').get(productController.getProductById).all(methodNotAllowed);
-router.route('/api/product_create').post(authCheck.checkAdmin, productController.addProduct).all(methodNotAllowed);
+router.route('/api/product_create').post(productController.addProduct).all(methodNotAllowed);
 router.route('/api/product_remove/:id').delete(authCheck.checkAdmin, productController.removeProduct).all(methodNotAllowed);
 
 
