@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Product = require('../models/Product');
 
 
@@ -14,6 +15,40 @@ module.exports.getProducts = async (req, res) => {
     })
   }
 }
+
+module.exports.getProductById = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'please provide valid productId'
+      });
+    }
+
+    const products = await Product.find({ _id: id });
+    if (products.length === 0) {
+      return res.status(200).json({
+        status: 'not found',
+        message: 'Product not found'
+      });
+    }
+
+
+    return res.status(200).json(products);
+
+
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `something went wrong ${err}`
+    });
+  }
+}
+
+
+
 
 
 

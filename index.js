@@ -10,6 +10,7 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const fileUpload = require('express-fileupload');
 const path = require('path');
+mongoose.set('strictQuery', true);
 mongoose.connect(process.env.MONGO_KEY, { useNewUrlParser: true, useUnifiedTopology: true }).then((result) => {
   app.listen(port);
 });
