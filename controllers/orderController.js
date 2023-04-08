@@ -30,3 +30,38 @@ module.exports.addOrder = async (req, res) => {
     });
   }
 }
+
+
+
+module.exports.getOrders = async (req, res) => {
+
+  try {
+    const orders = await Order.find().sort({ createdAt: -1 });
+    res.status(200).json(orders);
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `something went wrong ${err}`
+    });
+  }
+
+}
+
+module.exports.getOrderById = async (req, res) => {
+
+  try {
+    const order = await Order.findById(req.params.id).populate(
+      'user',
+      'fullname email'
+    );
+    res.status(200).json(order);
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `something went wrong ${err}`
+    });
+  }
+
+}
+
+

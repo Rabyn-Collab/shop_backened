@@ -13,6 +13,9 @@ const methodNotAllowed = (req, res) => res.status(405).json({ 'message': 'method
 
 router.route('/api/order_create').post(authCheck.checkUser, orderController.addOrder).all(methodNotAllowed);
 
+router.route('/api/user/order').get(authCheck.checkUser, orderController.getOrderById).all(methodNotAllowed);
+
+router.route('/api/all/orders').get(authCheck.checkAdmin, orderController.getOrders).all(methodNotAllowed);
 
 
 

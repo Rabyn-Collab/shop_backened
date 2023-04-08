@@ -73,11 +73,48 @@ module.exports.userSignUp = async (req, res) => {
       message: 'user successfully registered'
     });
   } catch (err) {
-    console.log(err);
+
     return res.status(400).json({
       status: 'error',
       message: err
     })
+  }
+
+}
+
+
+module.exports.updateUserProfile = async (req, res) => {
+  const user = await User.findById(req.userId);
+  try {
+    const user = await User.findById(req.userId);
+    if (user) {
+      user.fullname = req.body.fullname || user.fullname
+      user.email = req.body.email || user.email
+      if (req.body.password) {
+        const hashedPassword = await bcrypt.hash(req.body.password, 12);
+        user.password = hashedPassword;
+      }
+      const updatedUser = await user.save();
+      const token = jwt.sign({ id: isExistUser._id, isAdmin: isExistUser.isAdmin }, 'tokenGenerate');
+
+      res.status(201).json({
+        id: updatedUser._id,
+        fullname: updatedUser.fullname,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        token
+      });
+    } else {
+      return res.status(404).json({
+        status: 'error',
+        message: 'user not found'
+      });
+    }
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `something went wrong ${err}`
+    });
   }
 
 }
