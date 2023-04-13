@@ -16,7 +16,7 @@ router.route('/').get(productController.getProducts).all(methodNotAllowed);
 router.route('/api/product/:id').get(productController.getProductById).all(methodNotAllowed);
 router.route('/api/product_create').post(authCheck.checkAdmin, file_check.file_check, productController.addProduct).all(methodNotAllowed);
 
-router.route('/api/product_update/:id').patch(file_check.update_file_check, productController.updateProduct).all(methodNotAllowed);
+router.route('/api/product_update/:id').patch(authCheck.checkAdmin, file_check.update_file_check, productController.updateProduct).all(methodNotAllowed);
 
 router.route('/api/product_remove/:id').delete(authCheck.checkAdmin, productController.removeProduct).all(methodNotAllowed);
 
