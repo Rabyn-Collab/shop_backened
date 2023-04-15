@@ -169,7 +169,7 @@ module.exports.createProductReview = async (req, res) => {
 
     } else {
       const review = {
-        name: req.user.name,
+        name: req.user.fullname,
         rating: Number(rating),
         comment,
         user: req.user._id,
