@@ -5,17 +5,14 @@ const Order = require('../models/Order');
 module.exports.addOrder = async (req, res) => {
   const {
     orderItems,
-    shippingAddess,
-    itemPrice,
+    shippingAddress,
     totalPrice
   } = req.body;
   try {
     await Order.create({
       orderItems,
       user: req.userId,
-      shippingAddess,
-      paymentMethods,
-      itemPrice,
+      shippingAddress,
       totalPrice
     });
     return res.status(201).json({
