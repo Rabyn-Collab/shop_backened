@@ -23,6 +23,8 @@ const methodNotAllowed = (req, res) => res.status(405).json({ 'message': 'method
 router.route('/api/userLogin').post(validator.body(loginSchema), userController.userLogin).all(methodNotAllowed);
 router.route('/api/userSignUp').post(validator.body(registerSchema), userController.userSignUp).all(methodNotAllowed);
 router.route('/api/updateUser').patch(check.checkUser, userController.updateUserProfile).all(methodNotAllowed);
+router.route('/api/getUser').get(check.checkUser, userController.getUserById).all(methodNotAllowed);
+router.route('/api/users').get(check.checkAdmin, userController.getUsers).all(methodNotAllowed);
 
 
 

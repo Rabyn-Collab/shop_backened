@@ -20,7 +20,8 @@ module.exports.userLogin = async (req, res) => {
             fullname: isExistUser.fullname,
             email: isExistUser.email,
             isAdmin: isExistUser.isAdmin,
-            token
+            token,
+            shippingAddress: isExistUser.shippingAddress
           }
         });
       } else {
@@ -84,26 +85,31 @@ module.exports.userSignUp = async (req, res) => {
 
 
 module.exports.updateUserProfile = async (req, res) => {
-  const user = await User.findById(req.userId);
+
   try {
     const user = await User.findById(req.userId);
     if (user) {
-      user.fullname = req.body.fullname || user.fullname
-      user.email = req.body.email || user.email
+      user.fullname = req.body.fullname || user.fullname;
+      user.email = req.body.email || user.email;
+      user.shippingAddress = req.body.shippingAddress || user.shippingAddress;
       if (req.body.password) {
         const hashedPassword = await bcrypt.hash(req.body.password, 12);
         user.password = hashedPassword;
       }
       const updatedUser = await user.save();
-      const token = jwt.sign({ id: isExistUser._id, isAdmin: isExistUser.isAdmin }, 'tokenGenerate');
-
-      res.status(201).json({
-        id: updatedUser._id,
-        fullname: updatedUser.fullname,
-        email: updatedUser.email,
-        isAdmin: updatedUser.isAdmin,
-        token
+      const token = jwt.sign({ id: updatedUser._id, isAdmin: updatedUser.isAdmin }, 'tokenGenerate');
+      return res.status(200).json({
+        status: 'success',
+        data: {
+          id: updatedUser._id,
+          fullname: updatedUser.fullname,
+          email: updatedUser.email,
+          isAdmin: updatedUser.isAdmin,
+          token,
+          shippingAddress: updatedUser.shippingAddress
+        }
       });
+
     } else {
       return res.status(404).json({
         status: 'error',
@@ -117,4 +123,34 @@ module.exports.updateUserProfile = async (req, res) => {
     });
   }
 
+}
+
+
+
+module.exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById({ _id: req.userId }).select({ password: 0 });
+    return res.status(200).json(user);
+
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `something went wrong ${err}`
+    });
+  }
+}
+
+
+module.exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find({ isAdmin: false }).select({ password: 0 }).sort({ createdAt: -1 })
+
+    return res.status(200).json(users);
+
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `something went wrong ${err}`
+    });
+  }
 }

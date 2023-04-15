@@ -48,7 +48,7 @@ module.exports.checkAdmin = (req, res, next) => {
     if (token) {
       const decode = jwt.decode(token, 'tokenGenerate');
       if (decode && decode.isAdmin) {
-        next();
+        return next();
       } else {
         return res.status(401).json({
           status: 401,

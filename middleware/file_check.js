@@ -41,8 +41,10 @@ const file_check = (req, res, next) => {
 const update_file_check = (req, res, next) => {
 
   if (!req.files) {
-    next();
+
+    return next();
   }
+
   if (!req.files.product_image || !req.query.imagePath) {
     return res.status(400).json({
       status: 'error',

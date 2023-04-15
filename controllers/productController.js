@@ -94,10 +94,12 @@ module.exports.updateProduct = async (req, res, next) => {
     product_price,
     brand,
     category,
-    countInStock
+    countInStock,
+    product_image
   } = req.body;
 
   try {
+
 
     await Product.findByIdAndUpdate({ _id: req.params.id }, {
       product_name,
@@ -106,7 +108,7 @@ module.exports.updateProduct = async (req, res, next) => {
       brand,
       category,
       countInStock,
-      product_image: req.imagePath
+      product_image: req.imagePath ?? product_image
     });
     return res.status(201).json({
       status: 'success',
