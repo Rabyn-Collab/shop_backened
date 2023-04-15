@@ -165,8 +165,9 @@ module.exports.createProductReview = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     const isExist = product.reviews.find((r) => r.user.toString() === req.userId);
+
     if (isExist) {
-      res.status(422).json({ status: 'success', message: 'Review already added' });
+      res.status(422).json({ status: 'error', message: 'Review already added' });
     } else {
       const review = {
         name: fullname,
