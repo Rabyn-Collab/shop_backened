@@ -20,6 +20,9 @@ router.route('/api/product_update/:id').patch(authCheck.checkAdmin, check.update
 
 router.route('/api/product_remove/:id').delete(authCheck.checkAdmin, productController.removeProduct).all(methodNotAllowed);
 
+router.route('/api/add_product_review/:id').patch(authCheck.checkUser, productController.createProductReview).all(methodNotAllowed);
+
+
 
 
 
