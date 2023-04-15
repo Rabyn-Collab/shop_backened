@@ -160,7 +160,7 @@ module.exports.getTopProducts = async (req, res) => {
 
 
 module.exports.createProductReview = async (req, res) => {
-  const { rating, comment } = req.body
+  const { rating, comment, fullname } = req.body
 
   try {
     const product = await Product.findById(req.params.id);
@@ -169,10 +169,10 @@ module.exports.createProductReview = async (req, res) => {
 
     } else {
       const review = {
-        name: req.user.fullname,
+        name: fullname,
         rating: Number(rating),
         comment,
-        user: req.user._id,
+        user: req.userId,
       }
 
       product.reviews.push(review)
