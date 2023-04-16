@@ -47,10 +47,7 @@ module.exports.getOrders = async (req, res) => {
 module.exports.getOrderById = async (req, res) => {
 
   try {
-    const order = await Order.findById(req.params.id).populate(
-      'user',
-      'fullname email'
-    );
+    const order = await Order.find({ user: req.userId });
     res.status(200).json(order);
   } catch (err) {
     return res.status(400).json({
