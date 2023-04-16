@@ -27,8 +27,8 @@ module.exports.getProductById = async (req, res) => {
       });
     }
 
-    const products = await Product.find({ _id: id });
-    if (products.length === 0) {
+    const products = await Product.findById({ _id: id });
+    if (!products) {
       return res.status(200).json({
         status: 'not found',
         message: 'Product not found'
