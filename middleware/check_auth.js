@@ -13,7 +13,7 @@ module.exports.checkUser = (req, res, next) => {
       const decode = jwt.decode(token, 'tokenGenerate');
       if (decode) {
         req.userId = decode.id;
-        next();
+        return next();
       } else {
         return res.status(401).json({
           status: 401,

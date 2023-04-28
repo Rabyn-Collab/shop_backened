@@ -27,8 +27,6 @@ const userSchema = mongoose.Schema({
     city: { type: String, default: '' },
     isEmpty: { type: Boolean, default: true }
   },
-
-
 }, { timestamps: true });
 
 
