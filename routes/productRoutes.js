@@ -9,6 +9,16 @@ const authCheck = require('../middleware/check_auth');
 
 const methodNotAllowed = (req, res) => res.status(405).json({ 'message': 'method not allowed' });
 
+const productSchema = Joi.object().keys({
+  product_name: Joi.string().required(),
+  // product_detail: Joi.string().required(),
+  // product_price: Joi.string().required(),
+  // brand: Joi.string().required(),
+  // category: Joi.string().required(),
+  // countInStock: Joi.number().required(),
+  product_image: Joi.alternatives('').required()
+});
+
 
 
 

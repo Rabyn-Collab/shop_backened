@@ -1,19 +1,15 @@
 const jwt = require('jsonwebtoken');
 
 
-
-
-
 module.exports.checkUser = (req, res, next) => {
   const token = req.headers.authorization;
-
   try {
 
     if (token) {
       const decode = jwt.decode(token, 'tokenGenerate');
       if (decode) {
         req.userId = decode.id;
-        next();
+        return next();
       } else {
         return res.status(401).json({
           status: 401,
@@ -42,7 +38,7 @@ module.exports.checkUser = (req, res, next) => {
 
 module.exports.checkAdmin = (req, res, next) => {
   const token = req.headers.authorization;
-
+  console.log(token);
   try {
 
     if (token) {

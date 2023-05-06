@@ -63,15 +63,15 @@ module.exports.addProduct = async (req, res) => {
     countInStock
   } = req.body;
   try {
-    await Product.create({
-      product_name,
-      product_detail,
-      product_price,
-      brand,
-      category,
-      countInStock,
-      product_image: req.imagePath
-    });
+    // await Product.create({
+    //   product_name,
+    //   product_detail,
+    //   product_price,
+    //   brand,
+    //   category,
+    //   countInStock,
+    //   product_image: req.imagePath
+    // });
     return res.status(201).json({
       status: 'success',
       message: 'successfully created'

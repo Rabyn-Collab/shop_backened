@@ -9,7 +9,6 @@ const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const fileUpload = require('express-fileupload');
-const path = require('path');
 mongoose.set('strictQuery', true);
 mongoose.connect(process.env.MONGO_KEY, { useNewUrlParser: true, useUnifiedTopology: true }).then((result) => {
   app.listen(port);
@@ -19,7 +18,6 @@ mongoose.connect(process.env.MONGO_KEY, { useNewUrlParser: true, useUnifiedTopol
 
 app.use(morgan('dev'));
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(fileUpload({
   limits: { fileSize: 600000 },
@@ -27,7 +25,7 @@ app.use(fileUpload({
   createParentPath: true
 }));
 
-app.use('/uploads/images', express.static(path.join('uploads', 'images',)));
+app.use('/uploads', express.static('uploads'));
 
 app.use(userRoutes);
 app.use(productRoutes);
